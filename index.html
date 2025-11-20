@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Group 12 Lab 3</h1>
+    <div class="circuit-container">
+        <svg id="circuit-svg" width="420" height="180" viewBox="0 0 420 180">
+            <!-- Battery -->
+            <rect x="20" y="70" width="20" height="40" fill="#bbb" stroke="#333" stroke-width="2"/>
+            <rect x="40" y="80" width="10" height="20" fill="#fff" stroke="#333" stroke-width="2"/>
+            <rect x="50" y="70" width="10" height="40" fill="#bbb" stroke="#333" stroke-width="2"/>
+            <!-- Wires -->
+            <line x1="60" y1="90" x2="120" y2="90" stroke="#333" stroke-width="3"/>
+            <!-- Switch (open/close) -->
+            <g id="svg-switch" style="cursor:pointer;">
+                <line id="switch-base" x1="120" y1="90" x2="180" y2="90" stroke="#333" stroke-width="3"/>
+                <line id="switch-lever" x1="150" y1="90" x2="170" y2="60" stroke="#d32f2f" stroke-width="4"/>
+                <circle cx="150" cy="90" r="6" fill="#fff" stroke="#333" stroke-width="2"/>
+            </g>
+            <!-- Wire to resistor -->
+            <line x1="180" y1="90" x2="220" y2="90" stroke="#333" stroke-width="3"/>
+            <!-- Resistor symbol -->
+            <polyline points="220,90 225,80 230,100 235,80 240,100 245,80 250,100 255,80 260,90" fill="none" stroke="#333" stroke-width="3"/>
+            <!-- Wire to LED -->
+            <line x1="260" y1="90" x2="280" y2="90" stroke="#333" stroke-width="3"/>
+            <!-- LED symbol -->
+            <g id="svg-led">
+                <polygon points="280,80 295,90 280,100" fill="#fff" stroke="#333" stroke-width="2"/>
+                <line x1="295" y1="90" x2="310" y2="90" stroke="#333" stroke-width="3"/>
+                <!-- LED arrows -->
+                <g id="led-arrows">
+                    <line x1="300" y1="75" x2="310" y2="65" stroke="#1976d2" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    <line x1="308" y1="80" x2="318" y2="70" stroke="#1976d2" stroke-width="2" marker-end="url(#arrowhead)"/>
+                </g>
+                <circle id="led-glow" cx="295" cy="90" r="10" fill="#00e676" opacity="0"/>
+            </g>
+            <!-- Arrowhead marker definition -->
+            <defs>
+                <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L6,3 z" fill="#1976d2" />
+                </marker>
+            </defs>
+            <!-- Wire back to battery -->
+            <line x1="310" y1="90" x2="400" y2="90" stroke="#333" stroke-width="3"/>
+            <line x1="400" y1="90" x2="400" y2="120" stroke="#333" stroke-width="3"/>
+            <line x1="400" y1="120" x2="20" y2="120" stroke="#333" stroke-width="3"/>
+            <line x1="20" y1="120" x2="20" y2="110" stroke="#333" stroke-width="3"/>
+        </svg>
+        <button id="switch" style="margin-top:20px;">Close Switch</button>
+        <div id="battery-bar-container">
+            <div id="battery-bar"></div>
+        </div>
+        <div id="battery-label">100% battery charge</div>
+        <p>Press the switch to enter.</p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
