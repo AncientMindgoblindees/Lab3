@@ -133,3 +133,24 @@ p {
     letter-spacing: 1px;
     user-select: none;
 }
+.protected-link-container {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.protected-btn {
+    background-color: transparent;
+    color: #FFD700;
+    border: 2px solid #FFD700;
+    padding: 10px 22px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.2s ease-in-out;
+}
+
+.protected-btn:hover {
+    background-color: #FFD700;
+    color: black;
+}
