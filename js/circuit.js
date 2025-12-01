@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (batteryBar) batteryBar.style.width = '0%';
                 if (batteryLabel) batteryLabel.textContent = '0% battery charge';
                 setTimeout(() => {
-                    window.location.href = 'profiles.html';
+                    window.location.href = '/html/teammates.html';
                 }, 200);
             }
         }
