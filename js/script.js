@@ -28,3 +28,18 @@ async function requestPassword() {
         alert("Sorry, something went wrong with the password check.");
     }
 }
+
+document.querySelectorAll('.profile-card').forEach(card => {
+  card.addEventListener('click', function() {
+    const profile = card.getAttribute('data-profile');
+    window.location.href = `/html/${profile}.html`;
+  });
+});
+
+document.getElementById('save-bio').onclick = function() {
+  const bio = document.getElementById('bio').value;
+  localStorage.setItem('userBio', bio);
+  alert('Biography saved!');
+};
+// Load saved bio on page load
+document.getElementById('bio').value = localStorage.getItem('userBio') || '';

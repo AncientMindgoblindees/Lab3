@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chris</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body style="background:#111; color:#ffd700; font-family:Arial,sans-serif; margin:0;">
+    <h1 style="background:#000; color:#ffd700; padding:20px; margin:0; text-align:center; letter-spacing:2px; border-bottom:2px solid #ffd700;">Chris Keller</h1>
+    <p style="padding:20px; text-align:center; color:#ffd700; font-size:1.2rem;">
+    </p>
+
+        <div id="bio-display" style="margin-top:10px; background:#222; color:#ffd700; border:2px solid #ffd700; border-radius:8px; padding:10px; font-size:1rem; min-height:80px;"></div>
+        </div>
+        <script>
+            // Load saved bio from localStorage
+            document.addEventListener('DOMContentLoaded', function() {
+                var bio = localStorage.getItem('userBio') || 'No biography available.';
+                document.getElementById('bio-display').textContent = bio;
+            });
+        </script>
+
+    <script src="/js/auth_config.js"></script>
+    <script src="/js/script.js"></script>
+</body>
+</html>
