@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chris Keller</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body style="background:#111; color:#ffd700; font-family:Arial,sans-serif; margin:0;">
     <h1 style="background:#000; color:#ffd700; padding:20px; margin:0; text-align:center; letter-spacing:2px; border-bottom:2px solid #ffd700;">Chris Keller</h1>
@@ -20,16 +21,27 @@
       </div>
     </div>
     <script>
-      // Load saved bio from localStorage
+      // Load saved bio and zipped JPEG image from localStorage
       document.addEventListener('DOMContentLoaded', function() {
         var bio = localStorage.getItem('userBio-chris') || 'No biography available.';
         document.getElementById('bio-display').textContent = bio;
-        // Load saved image for Chris
-        var imgData = localStorage.getItem('profileImg-chris');
-        if (imgData) {
-          var imgPreview = document.getElementById('img-preview');
-          imgPreview.src = imgData;
-          imgPreview.style.display = 'block';
+        // Load saved zipped JPEG image for Chris
+        var zippedData = localStorage.getItem('profileImg-chris');
+        var imgPreview = document.getElementById('img-preview');
+        if (zippedData) {
+          JSZip.loadAsync(zippedData, {base64: true}).then(function(zip) {
+            return zip.file('profile.jpg').async('base64');
+          }).then(function(imgBase64) {
+            imgPreview.src = 'data:image/jpeg;base64,' + imgBase64;
+            imgPreview.style.display = 'block';
+          }).catch(function(err) {
+            imgPreview.style.display = 'none';
+            console.error('Error unzipping image:', err);
+            // Optionally clear corrupted data
+            // localStorage.removeItem('profileImg-chris');
+          });
+        } else {
+          imgPreview.style.display = 'none';
         }
       });
     </script>

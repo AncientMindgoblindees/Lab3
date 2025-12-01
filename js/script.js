@@ -37,9 +37,15 @@ document.querySelectorAll('.profile-card').forEach(card => {
 });
 
 document.getElementById('save-bio').onclick = function() {
-  const bio = document.getElementById('bio').value;
-  localStorage.setItem('userBio', bio);
-  alert('Biography saved!');
+    const bioInput = document.getElementById('bio');
+    if (bioInput) {
+        const bio = bioInput.value;
+        localStorage.setItem('userBio', bio);
+        alert('Biography saved!');
+    }
 };
 // Load saved bio on page load
-document.getElementById('bio').value = localStorage.getItem('userBio') || '';
+const bioInput = document.getElementById('bio');
+if (bioInput) {
+    bioInput.value = localStorage.getItem('userBio') || '';
+}

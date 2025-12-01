@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mazin Ali</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body style="background:#111; color:#ffd700; font-family:Arial,sans-serif; margin:0;">
@@ -20,16 +21,25 @@
       </div>
     </div>
     <script>
-      // Load saved bio and image from localStorage
+      // Load saved bio and zipped JPEG image from localStorage
       document.addEventListener('DOMContentLoaded', function() {
         var bio = localStorage.getItem('userBio-mazin') || 'No biography available.';
         document.getElementById('bio-display').textContent = bio;
-        // Load saved image for Mazin Ali
-        var imgData = localStorage.getItem('profileImg-mazin');
+        // Load saved zipped JPEG image for Mazin
+        var zippedData = localStorage.getItem('profileImg-mazin');
         var imgPreview = document.getElementById('img-preview');
-        if (imgData) {
-          imgPreview.src = imgData;
-          imgPreview.style.display = 'block';
+        if (zippedData) {
+          JSZip.loadAsync(zippedData, {base64: true}).then(function(zip) {
+            return zip.file('profile.jpg').async('base64');
+          }).then(function(imgBase64) {
+            imgPreview.src = 'data:image/jpeg;base64,' + imgBase64;
+            imgPreview.style.display = 'block';
+          }).catch(function(err) {
+            imgPreview.style.display = 'none';
+            console.error('Error unzipping image:', err);
+            // Optionally clear corrupted data
+            // localStorage.removeItem('profileImg-mazin');
+          });
         } else {
           imgPreview.style.display = 'none';
         }
