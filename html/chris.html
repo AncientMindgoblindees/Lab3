@@ -3,23 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chris</title>
+    <title>Chris Keller</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body style="background:#111; color:#ffd700; font-family:Arial,sans-serif; margin:0;">
     <h1 style="background:#000; color:#ffd700; padding:20px; margin:0; text-align:center; letter-spacing:2px; border-bottom:2px solid #ffd700;">Chris Keller</h1>
-    <p style="padding:20px; text-align:center; color:#ffd700; font-size:1.2rem;">
-    </p>
-
-        <div id="bio-display" style="margin-top:10px; background:#222; color:#ffd700; border:2px solid #ffd700; border-radius:8px; padding:10px; font-size:1rem; min-height:80px;"></div>
-        </div>
-        <script>
-            // Load saved bio from localStorage
-            document.addEventListener('DOMContentLoaded', function() {
-                var bio = localStorage.getItem('userBio') || 'No biography available.';
-                document.getElementById('bio-display').textContent = bio;
-            });
-        </script>
+ 
+    <div style="display: flex; min-height: 200px;">
+      <div style="flex: 1; padding: 30px 20px 30px 40px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <label style="color:#ffd700; font-weight:bold; margin-bottom:10px;">Chris Keller:</label>
+        <img id="img-preview" src="" alt="Image Preview" style="display:none; max-width:320px; max-height:320px; border-radius:10px; border:2px solid #ffd700; background:#222;" />
+      </div>
+      <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 30px 40px 30px 20px;">
+        <label style="color:#ffd700; font-weight:bold;">Biography:</label>
+        <div id="bio-display" style="margin-top:10px; background:#222; color:#ffd700; border:2px solid #ffd700; border-radius:8px; padding:10px; font-size:1rem; min-height:80px; width:100%;"></div>
+      </div>
+    </div>
+    <script>
+      // Load saved bio from localStorage
+      document.addEventListener('DOMContentLoaded', function() {
+        var bio = localStorage.getItem('userBio-chris') || 'No biography available.';
+        document.getElementById('bio-display').textContent = bio;
+        // Load saved image for Chris
+        var imgData = localStorage.getItem('profileImg-chris');
+        if (imgData) {
+          var imgPreview = document.getElementById('img-preview');
+          imgPreview.src = imgData;
+          imgPreview.style.display = 'block';
+        }
+      });
+    </script>
 
     <script src="/js/auth_config.js"></script>
     <script src="/js/script.js"></script>

@@ -9,17 +9,105 @@
 <body class="protected-body">
     <h1 class="protected-title">Protected Area</h1>
     <p class="protected-note">
-        Protected content
+        Protected content; Add specific user profile editing features here.
     </p>
 
     <div id="protected-content">
-        <label for="bio" style="color:#ffd700; font-weight:bold;">Biography:</label><br>
-        <textarea id="bio" rows="6" cols="40" style="width:100%;background:#222;color:#ffd700;border:2px solid #ffd700;border-radius:8px;padding:10px;font-size:1rem;"></textarea>
-        <br>
-        <button id="save-bio" style="margin-top:10px;background:#000;color:#ffd700;border:2px solid #ffd700;padding:8px 16px;border-radius:6px;font-weight:bold;cursor:pointer;">Save</button>
+        <!-- Profile Editing Sections -->
+        <div class="profile-edit" id="edit-chris" style="margin-bottom:32px;">
+            <h2 style="color:#ffd700; margin-bottom:10px;">Chris Keller</h2>
+            <label for="chris-img" style="color:#ffd700; font-weight:bold;">Profile Image:</label><br>
+            <input type="file" id="chris-img" accept="image/*" style="margin-bottom:10px; color:#ffd700; background:#222; border:2px solid #ffd700; border-radius:8px; padding:6px;" />
+            <img id="chris-img-preview" src="" alt="Image Preview" style="display:none; max-width:160px; max-height:160px; border-radius:10px; border:2px solid #ffd700; background:#222; margin-bottom:10px;" />
+            <label for="chris-bio" style="color:#ffd700; font-weight:bold;">Biography:</label><br>
+            <textarea id="chris-bio" rows="4" cols="40" style="width:100%;background:#222;color:#ffd700;border:2px solid #ffd700;border-radius:8px;padding:10px;font-size:1rem; margin-bottom:10px;"></textarea>
+            <button id="save-chris" style="margin-top:10px;background:#000;color:#ffd700;border:2px solid #ffd700;padding:8px 16px;border-radius:6px;font-weight:bold;cursor:pointer;">Save Chris</button>
+        </div>
+        <div class="profile-edit" id="edit-tj" style="margin-bottom:32px;">
+            <h2 style="color:#ffd700; margin-bottom:10px;">TJ Meltesen</h2>
+            <label for="tj-img" style="color:#ffd700; font-weight:bold;">Profile Image:</label><br>
+            <input type="file" id="tj-img" accept="image/*" style="margin-bottom:10px; color:#ffd700; background:#222; border:2px solid #ffd700; border-radius:8px; padding:6px;" />
+            <img id="tj-img-preview" src="" alt="Image Preview" style="display:none; max-width:160px; max-height:160px; border-radius:10px; border:2px solid #ffd700; background:#222; margin-bottom:10px;" />
+            <label for="tj-bio" style="color:#ffd700; font-weight:bold;">Biography:</label><br>
+            <textarea id="tj-bio" rows="4" cols="40" style="width:100%;background:#222;color:#ffd700;border:2px solid #ffd700;border-radius:8px;padding:10px;font-size:1rem; margin-bottom:10px;"></textarea>
+            <button id="save-tj" style="margin-top:10px;background:#000;color:#ffd700;border:2px solid #ffd700;padding:8px 16px;border-radius:6px;font-weight:bold;cursor:pointer;">Save TJ</button>
+        </div>
+        <div class="profile-edit" id="edit-mazin" style="margin-bottom:32px;">
+            <h2 style="color:#ffd700; margin-bottom:10px;">Mazin Ali</h2>
+            <label for="mazin-img" style="color:#ffd700; font-weight:bold;">Profile Image:</label><br>
+            <input type="file" id="mazin-img" accept="image/*" style="margin-bottom:10px; color:#ffd700; background:#222; border:2px solid #ffd700; border-radius:8px; padding:6px;" />
+            <img id="mazin-img-preview" src="" alt="Image Preview" style="display:none; max-width:160px; max-height:160px; border-radius:10px; border:2px solid #ffd700; background:#222; margin-bottom:10px;" />
+            <label for="mazin-bio" style="color:#ffd700; font-weight:bold;">Biography:</label><br>
+            <textarea id="mazin-bio" rows="4" cols="40" style="width:100%;background:#222;color:#ffd700;border:2px solid #ffd700;border-radius:8px;padding:10px;font-size:1rem; margin-bottom:10px;"></textarea>
+            <button id="save-mazin" style="margin-top:10px;background:#000;color:#ffd700;border:2px solid #ffd700;padding:8px 16px;border-radius:6px;font-weight:bold;cursor:pointer;">Save Mazin</button>
+        </div>
+        <div class="profile-edit" id="edit-jake" style="margin-bottom:32px;">
+            <h2 style="color:#ffd700; margin-bottom:10px;">Jake Bleeden</h2>
+            <label for="jake-img" style="color:#ffd700; font-weight:bold;">Profile Image:</label><br>
+            <input type="file" id="jake-img" accept="image/*" style="margin-bottom:10px; color:#ffd700; background:#222; border:2px solid #ffd700; border-radius:8px; padding:6px;" />
+            <img id="jake-img-preview" src="" alt="Image Preview" style="display:none; max-width:160px; max-height:160px; border-radius:10px; border:2px solid #ffd700; background:#222; margin-bottom:10px;" />
+            <label for="jake-bio" style="color:#ffd700; font-weight:bold;">Biography:</label><br>
+            <textarea id="jake-bio" rows="4" cols="40" style="width:100%;background:#222;color:#ffd700;border:2px solid #ffd700;border-radius:8px;padding:10px;font-size:1rem; margin-bottom:10px;"></textarea>
+            <button id="save-jake" style="margin-top:10px;background:#000;color:#ffd700;border:2px solid #ffd700;padding:8px 16px;border-radius:6px;font-weight:bold;cursor:pointer;">Save Jake</button>
+        </div>
     </div>
 
-    <script src="/js/auth_config.js"></script>
-    <script src="/js/script.js"></script>
+        <script>
+            // Utility to handle image preview and saving
+            function setupImageInput(imgInputId, imgPreviewId, storageKey) {
+                const input = document.getElementById(imgInputId);
+                const preview = document.getElementById(imgPreviewId);
+                // Load saved image
+                const imgData = localStorage.getItem(storageKey);
+                if (imgData) {
+                    preview.src = imgData;
+                    preview.style.display = 'block';
+                }
+                input.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(evt) {
+                            preview.src = evt.target.result;
+                            preview.style.display = 'block';
+                            try {
+                                localStorage.setItem(storageKey, evt.target.result);
+                            } catch (err) {
+                                alert('Error saving image: ' + (err && err.message ? err.message : err) + '\nThis may be due to localStorage quota being exceeded. Try using a smaller image.');
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
+            // Utility to handle biography saving/loading
+            function setupBioInput(bioInputId, saveBtnId, storageKey) {
+                const textarea = document.getElementById(bioInputId);
+                const saveBtn = document.getElementById(saveBtnId);
+                textarea.value = localStorage.getItem(storageKey) || '';
+                saveBtn.onclick = function() {
+                    localStorage.setItem(storageKey, textarea.value);
+                    alert('Biography saved!');
+                };
+            }
+
+            // Setup for each profile
+            document.addEventListener('DOMContentLoaded', function() {
+                setupImageInput('chris-img', 'chris-img-preview', 'profileImg-chris');
+                setupBioInput('chris-bio', 'save-chris', 'userBio-chris');
+
+                setupImageInput('tj-img', 'tj-img-preview', 'profileImg-tj');
+                setupBioInput('tj-bio', 'save-tj', 'userBio-tj');
+
+                setupImageInput('mazin-img', 'mazin-img-preview', 'profileImg-mazin');
+                setupBioInput('mazin-bio', 'save-mazin', 'userBio-mazin');
+
+                setupImageInput('jake-img', 'jake-img-preview', 'profileImg-jake');
+                setupBioInput('jake-bio', 'save-jake', 'userBio-jake');
+            });
+        </script>
+        <script src="/js/auth_config.js"></script>
+        <script src="/js/script.js"></script>
 </body>
 </html>
