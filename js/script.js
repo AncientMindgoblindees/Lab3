@@ -1,6 +1,6 @@
 // Check authentication for protected content
 function checkProtectedAuth() {
-    if (sessionStorage.getItem('auth') !== 'true') {
+    if (!sessionStorage.getItem('auth') || sessionStorage.getItem('auth') !== 'true') {
         window.location.href = '/html/index.html'; // Redirect to login or home
     }
 }
