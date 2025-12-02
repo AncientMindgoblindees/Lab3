@@ -207,9 +207,84 @@
         </div>
     </div>
 
+    <!-- Visitor Messages Section -->
+    <div style="max-width: 1200px; margin: 40px auto; padding: 20px;">
+        <div style="background: #1a1a1a; border: 1px solid #333; border-radius: 16px; padding: 25px; border-top: 4px solid #ffd700;">
+            <h2 style="color: #fff; margin-top: 0; font-family: 'Montserrat', sans-serif; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 20px;">Visitor Messages</h2>
+            <div id="messages-container">
+                <p style="color: #888;">Loading messages...</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Centralized protected area loader -->
     <script src="/js/auth_config.js"></script>
     <script src="/js/script.js"></script>
     <script src="/js/protected.js"></script>
+    
+    <script>
+    // Load and display visitor messages
+    async function loadMessages() {
+        const container = document.getElementById('messages-container');
+        
+        try {
+            const response = await fetch('/assets/get_messages.php');
+            const result = await response.json();
+            
+            if (result.success && result.messages.length > 0) {
+                container.innerHTML = result.messages.map(msg => `
+                    <div style="background: #111; border: 1px solid #333; border-radius: 8px; padding: 20px; margin-bottom: 15px; position: relative;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                            <div>
+                                <span style="color: #ffd700; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; background: #222; padding: 4px 8px; border-radius: 4px;">For: ${msg.profile}</span>
+                                <span style="color: #555; font-size: 0.8rem; margin-left: 10px;">${msg.timestamp}</span>
+                            </div>
+                            <button onclick="deleteMessage('${msg.id}', '${msg.profile}')" style="background: #3d1a1a; color: #f44336; border: 1px solid #f44336; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">Delete</button>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <strong style="color: #ffd700;">From:</strong> <span style="color: #fff;">${msg.name}</span>
+                        </div>
+                        ${msg.email ? `<div style="margin-bottom: 10px;"><strong style="color: #ffd700;">Email:</strong> <a href="mailto:${msg.email}" style="color: #4da6ff;">${msg.email}</a></div>` : ''}
+                        ${msg.phone ? `<div style="margin-bottom: 10px;"><strong style="color: #ffd700;">Phone:</strong> <a href="tel:${msg.phone}" style="color: #4da6ff;">${msg.phone}</a></div>` : ''}
+                        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #333;">
+                            <strong style="color: #ffd700;">Message:</strong>
+                            <p style="color: #ddd; margin: 10px 0 0 0; line-height: 1.6;">${msg.message}</p>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                container.innerHTML = '<p style="color: #888; text-align: center; padding: 40px;">No visitor messages yet.</p>';
+            }
+        } catch (error) {
+            container.innerHTML = '<p style="color: #f44336;">Error loading messages: ' + error.message + '</p>';
+        }
+    }
+    
+    // Delete a message
+    async function deleteMessage(id, profile) {
+        if (!confirm('Are you sure you want to delete this message?')) return;
+        
+        try {
+            const response = await fetch('/assets/delete_message.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id, profile: profile })
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                loadMessages(); // Reload messages
+            } else {
+                alert('Error: ' + result.error);
+            }
+        } catch (error) {
+            alert('Error deleting message: ' + error.message);
+        }
+    }
+    
+    // Load messages on page load
+    document.addEventListener('DOMContentLoaded', loadMessages);
+    </script>
 </body>
 </html>

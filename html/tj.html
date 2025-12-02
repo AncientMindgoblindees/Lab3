@@ -141,12 +141,81 @@
                 <label class="bio-label">Biography</label>
                 <div id="bio-display">Loading...</div>
             </div>
+            
+            <!-- Contact Form -->
+            <div class="contact-card" style="background: #1a1a1a; padding: 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); border-left: 4px solid #ffd700; margin-top: 30px;">
+                <label class="bio-label">Contact TJ</label>
+                <form id="contact-form">
+                    <div style="margin-bottom: 15px;">
+                        <label for="contact-name" style="color: #ffd700; font-weight: 600; margin-bottom: 8px; display: block; font-size: 0.9rem;">Your Name *</label>
+                        <input type="text" id="contact-name" required style="width: 100%; background: #111; color: #fff; border: 1px solid #333; border-radius: 8px; padding: 12px; font-family: 'Open Sans', sans-serif;">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="contact-email" style="color: #ffd700; font-weight: 600; margin-bottom: 8px; display: block; font-size: 0.9rem;">Your Email</label>
+                        <input type="email" id="contact-email" style="width: 100%; background: #111; color: #fff; border: 1px solid #333; border-radius: 8px; padding: 12px; font-family: 'Open Sans', sans-serif;">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="contact-phone" style="color: #ffd700; font-weight: 600; margin-bottom: 8px; display: block; font-size: 0.9rem;">Your Phone</label>
+                        <input type="tel" id="contact-phone" style="width: 100%; background: #111; color: #fff; border: 1px solid #333; border-radius: 8px; padding: 12px; font-family: 'Open Sans', sans-serif;">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="contact-message" style="color: #ffd700; font-weight: 600; margin-bottom: 8px; display: block; font-size: 0.9rem;">Message *</label>
+                        <textarea id="contact-message" rows="4" required style="width: 100%; background: #111; color: #fff; border: 1px solid #333; border-radius: 8px; padding: 12px; font-family: 'Open Sans', sans-serif; resize: vertical;"></textarea>
+                    </div>
+                    <button type="submit" style="background: #ffd700; color: #000; border: none; padding: 12px 24px; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: background 0.3s ease;">Send Message</button>
+                    <div id="contact-status" style="margin-top: 15px; padding: 10px; border-radius: 6px; display: none;"></div>
+                </form>
+            </div>
         </main>
     </div>
 
     <footer>
         Group 12 Lab 3 &copy; 2025
     </footer>
+    
+    <script>
+    // Contact form submission
+    document.getElementById('contact-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const statusDiv = document.getElementById('contact-status');
+        const profile = document.body.getAttribute('data-profile') || 'tj';
+        
+        const formData = {
+            profile: profile,
+            name: document.getElementById('contact-name').value,
+            email: document.getElementById('contact-email').value,
+            phone: document.getElementById('contact-phone').value,
+            message: document.getElementById('contact-message').value
+        };
+        
+        try {
+            const response = await fetch('/assets/save_message.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                statusDiv.style.display = 'block';
+                statusDiv.style.background = '#1a3d1a';
+                statusDiv.style.color = '#4caf50';
+                statusDiv.textContent = 'Message sent successfully!';
+                document.getElementById('contact-form').reset();
+            } else {
+                throw new Error(result.error || 'Failed to send message');
+            }
+        } catch (error) {
+            statusDiv.style.display = 'block';
+            statusDiv.style.background = '#3d1a1a';
+            statusDiv.style.color = '#f44336';
+            statusDiv.textContent = 'Error: ' + error.message;
+        }
+        
+        setTimeout(() => { statusDiv.style.display = 'none'; }, 5000);
+    });
+    </script>
 
     <!-- Scripts -->
     <script src="/js/auth_config.js"></script>
