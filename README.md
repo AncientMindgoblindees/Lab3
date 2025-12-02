@@ -15,7 +15,6 @@ A dynamic team portfolio website featuring a black and gold theme, interactive c
 ```
 Lab3/
 ├── index.html              # Landing page with animated circuit
-├── styles.css              # Global black & gold themed styles
 ├── README.md               # Project documentation
 │
 ├── html/                   # Team member pages
