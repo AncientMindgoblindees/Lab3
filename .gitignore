@@ -1,1 +1,4 @@
 .github
+
+# Password tool output directory
+tools/output/
