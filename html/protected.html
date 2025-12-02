@@ -3,59 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Protected Area</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Admin Area</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background-color: #111;
+            color: #e0e0e0;
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+        }
+        header {
+            background: #000;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #ffd700;
+            margin-bottom: 40px;
+        }
+        h1 {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            color: #ffd700;
+            letter-spacing: 1px;
+            font-size: 1.5rem;
+        }
+        .back-link {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            padding: 8px 16px;
+            border: 1px solid #444;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .back-link:hover {
+            border-color: #ffd700;
+            color: #ffd700;
+            background: rgba(255, 215, 0, 0.05);
+        }
+        .protected-note {
+            text-align: center;
+            color: #888;
+            margin-bottom: 30px;
+        }
+        #protected-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .profile-edit {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 16px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            border-top: 4px solid #333;
+            transition: border-color 0.3s ease;
+        }
+        .profile-edit:hover {
+            border-top-color: #ffd700;
+        }
+        .profile-edit h2 {
+            color: #fff;
+            margin-top: 0;
+            font-family: 'Montserrat', sans-serif;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        label {
+            color: #ffd700;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+            font-size: 0.9rem;
+        }
+        input[type="file"] {
+            margin-bottom: 15px;
+            background: #111;
+            padding: 10px;
+            border-radius: 6px;
+            width: 100%;
+            border: 1px solid #333;
+            color: #ccc;
+        }
+        img.edit-preview {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 50%;
+            border: 2px solid #ffd700;
+            margin-bottom: 20px;
+            object-fit: cover;
+            display: block;
+        }
+        textarea {
+            width: 100%;
+            background: #111;
+            color: #fff;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Open Sans', sans-serif;
+            resize: vertical;
+            margin-bottom: 20px;
+            min-height: 100px;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+        button.save-btn {
+            background: #ffd700;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            align-self: flex-start;
+            transition: background 0.3s ease;
+        }
+        button.save-btn:hover {
+            background: #ffdb4d;
+        }
+    </style>
 </head>
 <body class="protected-body">
-    <h1 class="protected-title">Protected Area</h1>
+    <header>
+        <h1>Admin Dashboard</h1>
+        <a href="/html/teammates.html" class="back-link">&larr; Back to Team</a>
+    </header>
+    
     <p class="protected-note">
-        Protected content; Add specific user profile editing features here.
+        Authorized Access Only. Edit user profiles below.
     </p>
 
     <div id="protected-content">
-        <!-- Profile Editing Sections -->
-        <div class="profile-edit" id="edit-chris" style="margin-bottom:32px;">
-            <h2 style="color:#ffd700; margin-bottom:10px;">Chris Keller</h2>
-            <label for="chris-img" style="color:#ffd700; font-weight:bold;">Profile Image:</label><br>
-            <input type="file" id="chris-img" accept="image/*" style="margin-bottom:10px; color:#ffd700; background:#222; border:2px solid #ffd700; border-radius:8px; padding:6px;" />
-            <img id="chris-img-preview" src="" alt="Image Preview" style="display:none; max-width:160px; max-height:160px; border-radius:10px; border:2px solid #ffd700; background:#222; margin-bottom:10px;" />
-            <label for="chris-bio" style="color:#ffd700; font-weight:bold;">About Me:</label><br>
-            <textarea id="chris-bio" rows="4" cols="40" style="width:100%;background:#222;color:#ffd700;border:2px solid #ffd700;border-radius:8px;padding:10px;font-size:1rem; margin-bottom:10px;"></textarea>
-            <button id="save-chris" style="margin-top:10px;background:#000;color:#ffd700;border:2px solid #ffd700;padding:8px 16px;border-radius:6px;font-weight:bold;cursor:pointer;">Save Chris</button>
+        <!-- Chris Edit Card -->
+        <div class="profile-edit" id="edit-chris">
+            <h2>Chris Keller</h2>
+            
+            <label for="chris-img">Profile Image</label>
+            <input type="file" id="chris-img" accept="image/*" />
+            <img id="chris-img-preview" class="edit-preview" src="" alt="Preview" style="display:none;" />
+            
+            <label for="chris-bio">Biography</label>
+            <textarea id="chris-bio" rows="4"></textarea>
+            
+            <button id="save-chris" class="save-btn">Save</button>
         </div>
-        <div class="profile-edit" id="edit-tj" style="margin-bottom:32px;">
-            <h2 style="color:#ffd700; margin-bottom:10px;">TJ Meltesen</h2>
-            <label for="tj-img" style="color:#ffd700; font-weight:bold;">Profile Image:</label><br>
-            <input type="file" id="tj-img" accept="image/*" style="margin-bottom:10px; color:#ffd700; background:#222; border:2px solid #ffd700; border-radius:8px; padding:6px;" />
-            <img id="tj-img-preview" src="" alt="Image Preview" style="display:none; max-width:160px; max-height:160px; border-radius:10px; border:2px solid #ffd700; background:#222; margin-bottom:10px;" />
-            <label for="tj-bio" style="color:#ffd700; font-weight:bold;">About Me:</label><br>
-            <textarea id="tj-bio" rows="4" cols="40" style="width:100%;background:#222;color:#ffd700;border:2px solid #ffd700;border-radius:8px;padding:10px;font-size:1rem; margin-bottom:10px;"></textarea>
-            <button id="save-tj" style="margin-top:10px;background:#000;color:#ffd700;border:2px solid #ffd700;padding:8px 16px;border-radius:6px;font-weight:bold;cursor:pointer;">Save TJ</button>
+
+        <!-- TJ Edit Card -->
+        <div class="profile-edit" id="edit-tj">
+            <h2>TJ Meltesen</h2>
+            
+            <label for="tj-img">Profile Image</label>
+            <input type="file" id="tj-img" accept="image/*" />
+            <img id="tj-img-preview" class="edit-preview" src="" alt="Preview" style="display:none;" />
+            
+            <label for="tj-bio">Biography</label>
+            <textarea id="tj-bio" rows="4"></textarea>
+            
+            <button id="save-tj" class="save-btn">Save</button>
         </div>
-        <div class="profile-edit" id="edit-mazin" style="margin-bottom:32px;">
-            <h2 style="color:#ffd700; margin-bottom:10px;">Mazin Ali</h2>
-            <label for="mazin-img" style="color:#ffd700; font-weight:bold;">Profile Image:</label><br>
-            <input type="file" id="mazin-img" accept="image/*" style="margin-bottom:10px; color:#ffd700; background:#222; border:2px solid #ffd700; border-radius:8px; padding:6px;" />
-            <img id="mazin-img-preview" src="" alt="Image Preview" style="display:none; max-width:160px; max-height:160px; border-radius:10px; border:2px solid #ffd700; background:#222; margin-bottom:10px;" />
-            <label for="mazin-bio" style="color:#ffd700; font-weight:bold;">About Me:</label><br>
-            <textarea id="mazin-bio" rows="4" cols="40" style="width:100%;background:#222;color:#ffd700;border:2px solid #ffd700;border-radius:8px;padding:10px;font-size:1rem; margin-bottom:10px;"></textarea>
-            <button id="save-mazin" style="margin-top:10px;background:#000;color:#ffd700;border:2px solid #ffd700;padding:8px 16px;border-radius:6px;font-weight:bold;cursor:pointer;">Save Mazin</button>
+
+        <!-- Mazin Edit Card -->
+        <div class="profile-edit" id="edit-mazin">
+            <h2>Mazin Ali</h2>
+            
+            <label for="mazin-img">Profile Image</label>
+            <input type="file" id="mazin-img" accept="image/*" />
+            <img id="mazin-img-preview" class="edit-preview" src="" alt="Preview" style="display:none;" />
+            
+            <label for="mazin-bio">Biography</label>
+            <textarea id="mazin-bio" rows="4"></textarea>
+            
+            <button id="save-mazin" class="save-btn">Save</button>
         </div>
-        <div class="profile-edit" id="edit-jake" style="margin-bottom:32px;">
-            <h2 style="color:#ffd700; margin-bottom:10px;">Jake Bleeden</h2>
-            <label for="jake-img" style="color:#ffd700; font-weight:bold;">Profile Image:</label><br>
-            <input type="file" id="jake-img" accept="image/*" style="margin-bottom:10px; color:#ffd700; background:#222; border:2px solid #ffd700; border-radius:8px; padding:6px;" />
-            <img id="jake-img-preview" src="" alt="Image Preview" style="display:none; max-width:160px; max-height:160px; border-radius:10px; border:2px solid #ffd700; background:#222; margin-bottom:10px;" />
-            <label for="jake-bio" style="color:#ffd700; font-weight:bold;">About Me:</label><br>
-            <textarea id="jake-bio" rows="4" cols="40" style="width:100%;background:#222;color:#ffd700;border:2px solid #ffd700;border-radius:8px;padding:10px;font-size:1rem; margin-bottom:10px;"></textarea>
-            <button id="save-jake" style="margin-top:10px;background:#000;color:#ffd700;border:2px solid #ffd700;padding:8px 16px;border-radius:6px;font-weight:bold;cursor:pointer;">Save Jake</button>
+
+        <!-- Jake Edit Card -->
+        <div class="profile-edit" id="edit-jake">
+            <h2>Jake Bleeden</h2>
+            
+            <label for="jake-img">Profile Image</label>
+            <input type="file" id="jake-img" accept="image/*" />
+            <img id="jake-img-preview" class="edit-preview" src="" alt="Preview" style="display:none;" />
+            
+            <label for="jake-bio">Biography</label>
+            <textarea id="jake-bio" rows="4"></textarea>
+            
+            <button id="save-jake" class="save-btn">Save</button>
         </div>
     </div>
 
-        <!-- Centralized protected area loader -->
-        <script src="/js/protected.js"></script>
-        <script src="/js/auth_config.js"></script>
-        <script src="/js/script.js"></script>
+    <!-- Centralized protected area loader -->
+    <script src="/js/auth_config.js"></script>
+    <script src="/js/script.js"></script>
+    <script src="/js/protected.js"></script>
 </body>
 </html>
