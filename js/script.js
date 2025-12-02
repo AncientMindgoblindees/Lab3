@@ -1,7 +1,7 @@
 // Check authentication for protected content
 function checkProtectedAuth() {
     if (sessionStorage.getItem('auth') !== 'true') {
-        window.location.href = '/html/index.html'; // Redirect to login or home
+        window.location.href = '/html/teammates.html'; // Redirect to login or home
     }
 }
 
