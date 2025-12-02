@@ -21,21 +21,28 @@
       </div>
     </div>
     <script>
-      // Load saved bio from localStorage and image from server
+      // Load saved bio from localStorage and first available image from server
       document.addEventListener('DOMContentLoaded', function() {
         var bio = localStorage.getItem('userBio-jake') || 'No biography available.';
         document.getElementById('bio-display').textContent = bio;
-        // Load Jake's image from server
         var imgPreview = document.getElementById('img-preview');
-        var serverUrl = '/assets/images/jake.jpg';
-        fetch(serverUrl, {method: 'HEAD'}).then(function(res) {
-          if (res.ok) {
-            imgPreview.src = serverUrl + '?t=' + Date.now(); // cache bust
-            imgPreview.style.display = 'block';
-          } else {
+        var exts = ['jpg', 'png', 'gif'];
+        function tryLoad(extIdx) {
+          if (extIdx >= exts.length) {
             imgPreview.style.display = 'none';
+            return;
           }
-        });
+          var url = `/assets/images/jake.${exts[extIdx]}`;
+          fetch(url, {method: 'HEAD'}).then(function(res) {
+            if (res.ok) {
+              imgPreview.src = url + '?t=' + Date.now();
+              imgPreview.style.display = 'block';
+            } else {
+              tryLoad(extIdx + 1);
+            }
+          });
+        }
+        tryLoad(0);
       });
     </script>
 

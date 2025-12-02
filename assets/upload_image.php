@@ -18,41 +18,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profileImg'])) {
     $profile = isset($_POST['profile']) ? preg_replace('/[^a-zA-Z0-9_-]/', '', $_POST['profile']) : 'default';
     $targetFile = $targetDir . $profile . '.jpg';
     $tmpFile = $_FILES['profileImg']['tmp_name'];
-    $imgType = exif_imagetype($tmpFile);
+    $imgInfo = getimagesize($tmpFile);
+    $imgType = $imgInfo ? $imgInfo[2] : false;
     $image = false;
-    if (!extension_loaded('gd')) {
-        $response["message"] = "GD extension not enabled. Cannot process images.";
-    } else {
-        if ($imgType === IMAGETYPE_JPEG) {
-            $image = @imagecreatefromjpeg($tmpFile);
-            if (!$image) {
-                $response["message"] = "Failed to process JPEG image. File may be corrupted or not a valid JPEG.";
-            }
-        } elseif ($imgType === IMAGETYPE_PNG) {
-            $image = @imagecreatefrompng($tmpFile);
-            if (!$image) {
-                $response["message"] = "Failed to process PNG image. File may be corrupted or not a valid PNG.";
-            }
-        } elseif ($imgType === IMAGETYPE_GIF) {
-            $image = @imagecreatefromgif($tmpFile);
-            if (!$image) {
-                $response["message"] = "Failed to process GIF image. File may be corrupted or not a valid GIF.";
-            }
-        } else {
+        // If GD is not available, just save the file as-is
+        $allowedTypes = [IMAGETYPE_JPEG => 'jpg', IMAGETYPE_PNG => 'png', IMAGETYPE_GIF => 'gif'];
+        if (!isset($allowedTypes[$imgType])) {
             $response["message"] = "Unsupported image type. Please upload JPG, PNG, or GIF.";
-        }
-        if ($image) {
-            // Convert and save as JPEG (quality 85)
-            if (imagejpeg($image, $targetFile, 85)) {
-                $response["success"] = true;
-                $response["message"] = "Image uploaded and converted to JPEG.";
-                $response["url"] = 'assets/images/' . $profile . '.jpg';
-            } else {
-                $response["message"] = "Failed to save converted image.";
+        } else {
+            $ext = $allowedTypes[$imgType];
+            // Delete any existing image for this profile
+            foreach ($allowedTypes as $oldExt) {
+                $oldFile = $targetDir . $profile . '.' . $oldExt;
+                if (file_exists($oldFile)) {
+                    @unlink($oldFile);
+                }
             }
-            imagedestroy($image);
+            $targetFile = $targetDir . $profile . '.' . $ext;
+            if (move_uploaded_file($tmpFile, $targetFile)) {
+                $response["success"] = true;
+                $response["message"] = "Image uploaded successfully (no conversion).";
+                $response["url"] = 'assets/images/' . $profile . '.' . $ext;
+            } else {
+                $response["message"] = "Failed to save image.";
+            }
         }
-    }
 } else {
     $response["message"] = "No image uploaded.";
 }

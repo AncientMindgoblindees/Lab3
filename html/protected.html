@@ -54,61 +54,6 @@
     </div>
 
         <script>
-            // Utility to handle image preview and saving
-            // Generic: Upload image to server and preview for any profile
-            function setupProfileImageInput(imgInputId, imgPreviewId, profileName) {
-                const input = document.getElementById(imgInputId);
-                const preview = document.getElementById(imgPreviewId);
-                const serverUrl = `/assets/images/${profileName}.jpg`;
-                function loadServerImage() {
-                    fetch(serverUrl, {method: 'HEAD'}).then(res => {
-                        if (res.ok) {
-                            preview.src = serverUrl + '?t=' + Date.now();
-                            preview.style.display = 'block';
-                        } else {
-                            preview.style.display = 'none';
-                        }
-                    });
-                }
-                loadServerImage();
-                input.addEventListener('change', function(e) {
-                    const file = e.target.files[0];
-                    if (file) {
-                        const formData = new FormData();
-                        formData.append('profileImg', file);
-                        formData.append('profile', profileName);
-                        fetch('/assets/upload_image.php', {
-                            method: 'POST',
-                            body: formData
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                loadServerImage();
-                                alert('Image uploaded successfully!');
-                            } else {
-                                alert('Upload failed: ' + data.message);
-                            }
-                        })
-                        .catch(err => {
-                            alert('Error uploading image: ' + err);
-                        });
-                    }
-                });
-            }
-
-            // Utility to handle biography saving/loading
-            function setupBioInput(bioInputId, saveBtnId, storageKey) {
-                const textarea = document.getElementById(bioInputId);
-                const saveBtn = document.getElementById(saveBtnId);
-                textarea.value = localStorage.getItem(storageKey) || '';
-                saveBtn.onclick = function() {
-                    localStorage.setItem(storageKey, textarea.value);
-                    alert('Biography saved!');
-                };
-            }
-
-            // Setup for each profile
             document.addEventListener('DOMContentLoaded', function() {
                 setupProfileImageInput('chris-img', 'chris-img-preview', 'chris');
                 setupBioInput('chris-bio', 'save-chris', 'userBio-chris');
