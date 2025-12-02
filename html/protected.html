@@ -55,58 +55,44 @@
 
         <script>
             // Utility to handle image preview and saving
-            function setupImageInput(imgInputId, imgPreviewId, storageKey) {
+            // Generic: Upload image to server and preview for any profile
+            function setupProfileImageInput(imgInputId, imgPreviewId, profileName) {
                 const input = document.getElementById(imgInputId);
                 const preview = document.getElementById(imgPreviewId);
-                // Load saved zipped JPEG image and unzip for preview
-                const zippedData = localStorage.getItem(storageKey);
-                if (zippedData) {
-                    JSZip.loadAsync(zippedData, {base64: true}).then(function(zip) {
-                        return zip.file('profile.jpg').async('base64');
-                    }).then(function(imgBase64) {
-                        preview.src = 'data:image/jpeg;base64,' + imgBase64;
-                        preview.style.display = 'block';
-                    }).catch(function(err) {
-                        preview.style.display = 'none';
-                        console.error('Error unzipping image:', err);
-                        // Optionally clear corrupted data
-                        // localStorage.removeItem(storageKey);
+                const serverUrl = `/assets/images/${profileName}.jpg`;
+                function loadServerImage() {
+                    fetch(serverUrl, {method: 'HEAD'}).then(res => {
+                        if (res.ok) {
+                            preview.src = serverUrl + '?t=' + Date.now();
+                            preview.style.display = 'block';
+                        } else {
+                            preview.style.display = 'none';
+                        }
                     });
                 }
+                loadServerImage();
                 input.addEventListener('change', function(e) {
                     const file = e.target.files[0];
                     if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function(evt) {
-                            // Convert image to JPEG using canvas
-                            const img = new Image();
-                            img.onload = function() {
-                                const canvas = document.createElement('canvas');
-                                canvas.width = img.width;
-                                canvas.height = img.height;
-                                const ctx = canvas.getContext('2d');
-                                ctx.drawImage(img, 0, 0);
-                                // Convert to JPEG, quality 0.7
-                                const jpegDataUrl = canvas.toDataURL('image/jpeg', 0.7);
-                                const zip = new JSZip();
-                                let base64Data = jpegDataUrl.split(',')[1];
-                                zip.file('profile.jpg', base64Data, {base64: true});
-                                zip.generateAsync({type: 'base64'}).then(function(zipped) {
-                                    preview.src = jpegDataUrl;
-                                    preview.style.display = 'block';
-                                    try {
-                                        localStorage.setItem(storageKey, zipped);
-                                    } catch (err) {
-                                        alert('Error saving image: ' + (err && err.message ? err.message : err) + '\nThis may be due to localStorage quota being exceeded. Try using a smaller image.');
-                                    }
-                                });
-                            };
-                            img.onerror = function() {
-                                alert('Error loading image for conversion.');
-                            };
-                            img.src = evt.target.result;
-                        };
-                        reader.readAsDataURL(file);
+                        const formData = new FormData();
+                        formData.append('profileImg', file);
+                        formData.append('profile', profileName);
+                        fetch('/assets/upload_image.php', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                loadServerImage();
+                                alert('Image uploaded successfully!');
+                            } else {
+                                alert('Upload failed: ' + data.message);
+                            }
+                        })
+                        .catch(err => {
+                            alert('Error uploading image: ' + err);
+                        });
                     }
                 });
             }
@@ -124,16 +110,16 @@
 
             // Setup for each profile
             document.addEventListener('DOMContentLoaded', function() {
-                setupImageInput('chris-img', 'chris-img-preview', 'profileImg-chris');
+                setupProfileImageInput('chris-img', 'chris-img-preview', 'chris');
                 setupBioInput('chris-bio', 'save-chris', 'userBio-chris');
 
-                setupImageInput('tj-img', 'tj-img-preview', 'profileImg-tj');
+                setupProfileImageInput('tj-img', 'tj-img-preview', 'tj');
                 setupBioInput('tj-bio', 'save-tj', 'userBio-tj');
 
-                setupImageInput('mazin-img', 'mazin-img-preview', 'profileImg-mazin');
+                setupProfileImageInput('mazin-img', 'mazin-img-preview', 'mazin');
                 setupBioInput('mazin-bio', 'save-mazin', 'userBio-mazin');
 
-                setupImageInput('jake-img', 'jake-img-preview', 'profileImg-jake');
+                setupProfileImageInput('jake-img', 'jake-img-preview', 'jake');
                 setupBioInput('jake-bio', 'save-jake', 'userBio-jake');
             });
         </script>

@@ -21,28 +21,21 @@
       </div>
     </div>
     <script>
-      // Load saved bio and zipped JPEG image from localStorage
+      // Load saved bio from localStorage and image from server
       document.addEventListener('DOMContentLoaded', function() {
         var bio = localStorage.getItem('userBio-mazin') || 'No biography available.';
         document.getElementById('bio-display').textContent = bio;
-        // Load saved zipped JPEG image for Mazin
-        var zippedData = localStorage.getItem('profileImg-mazin');
+        // Load Mazin's image from server
         var imgPreview = document.getElementById('img-preview');
-        if (zippedData) {
-          JSZip.loadAsync(zippedData, {base64: true}).then(function(zip) {
-            return zip.file('profile.jpg').async('base64');
-          }).then(function(imgBase64) {
-            imgPreview.src = 'data:image/jpeg;base64,' + imgBase64;
+        var serverUrl = '/assets/images/mazin.jpg';
+        fetch(serverUrl, {method: 'HEAD'}).then(function(res) {
+          if (res.ok) {
+            imgPreview.src = serverUrl + '?t=' + Date.now(); // cache bust
             imgPreview.style.display = 'block';
-          }).catch(function(err) {
+          } else {
             imgPreview.style.display = 'none';
-            console.error('Error unzipping image:', err);
-            // Optionally clear corrupted data
-            // localStorage.removeItem('profileImg-mazin');
-          });
-        } else {
-          imgPreview.style.display = 'none';
-        }
+          }
+        });
       });
     </script>
 
