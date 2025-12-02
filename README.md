@@ -2,7 +2,7 @@
 
 A dynamic team portfolio website featuring a black and gold theme, interactive circuit animation, team member profiles with full content management, and a secure admin dashboard.
 
-## 👥 Team Members
+##  Team Members
 - **Chris Keller**
 - **TJ Meltesen**
 - **Mazin Ali**
@@ -10,7 +10,7 @@ A dynamic team portfolio website featuring a black and gold theme, interactive c
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 Lab3/
@@ -55,23 +55,23 @@ Lab3/
 
 ---
 
-## ✨ Features
+##  Features
 
-### 🎨 Landing Page (`index.html`)
+###  Landing Page (`index.html`)
 - Interactive SVG circuit diagram with battery, switch, resistor, and LED components
 - Animated battery charge meter (drains from gold to indicate progress)
 - Click the circuit switch to trigger battery drain animation
 - Auto-navigates to team page after animation completes
 - Modern black and gold color scheme with Montserrat/Open Sans fonts
 
-### 👤 Team Selection Page (`teammates.html`)
+###  Team Selection Page (`teammates.html`)
 - Responsive grid layout of team member profile cards
 - Dynamic profile image loading from server
 - Displays each member's major/field of study
 - Hover animations with gold accent highlighting
 - Link to password-protected admin area
 
-### 📋 Individual Profile Pages (`chris.html`, `tj.html`, `mazin.html`, `jake.html`)
+###  Individual Profile Pages (`chris.html`, `tj.html`, `mazin.html`, `jake.html`)
 - **Three-tab interface:**
   - **Biography** - Personal bio loaded from server
   - **Resume** - PDF viewer with download option
@@ -80,7 +80,7 @@ Lab3/
 - Responsive layout for mobile and desktop
 - Back navigation to team page
 
-### 🔐 Admin Dashboard (`protected.html`)
+###  Admin Dashboard (`protected.html`)
 - **SHA-256 password protection** (client-side authentication)
 - Edit capabilities for all team members:
   - Upload/change profile images (JPG, PNG, GIF)
@@ -93,13 +93,13 @@ Lab3/
   - Delete messages
   - Sorted by newest first
 
-### 💬 Contact/Messaging System
+###  Contact/Messaging System
 - Visitors can send messages to any team member via profile pages
 - Messages stored server-side with timestamps
 - Admin can view and manage all messages
 - Form validation for required fields
 
-### 🔧 Offline Admin Tools (`tools/`)
+###  Offline Admin Tools (`tools/`)
 - Cross-platform password change utilities
 - Python, PowerShell, and Batch scripts available
 - SHA-256 password hashing
@@ -107,7 +107,7 @@ Lab3/
 
 ---
 
-## 🛠️ Technology Stack
+##  Technology Stack
 
 | Layer | Technologies |
 |-------|-------------|
@@ -119,7 +119,7 @@ Lab3/
 
 ---
 
-## 🚀 Setup & Deployment
+##  Setup & Deployment
 
 ### Requirements
 - Web server with PHP 7+ support (Apache, Nginx, XAMPP, etc.)
@@ -148,7 +148,7 @@ Lab3/
 
 ---
 
-## 📝 API Endpoints
+##  API Endpoints
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
@@ -162,6 +162,6 @@ Lab3/
 
 ---
 
-## 📄 License
+##  License
 
 Group 12 Lab 3 © 2025
