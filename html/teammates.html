@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meet the Team</title>
+    <title>Meet the Gang</title>
     <link rel="stylesheet" href="/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400&display=swap" rel="stylesheet">
     <style>
@@ -54,18 +54,36 @@
             border-color: #ffd700;
         }
         .profile-img-slot {
-            width: 130px;
-            height: 130px;
+            width: 100%;
+            height: 100%;
+            max-width: 200px;
+            max-height: 200px;
+            aspect-ratio: 1;
             margin-bottom: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+            border: 3px solid #333;
+            transition: border-color 0.3s ease;
+        }
+        .profile-card:hover .profile-img-slot {
+            border-color: #ffd700;
         }
         /* Style the image injected by JS */
         .profile-img-slot img {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
-            border: 4px solid #ffd700;
+            border-radius: 0;
+            border: none;
             object-fit: cover;
             background: #000;
+        }
+        .profile-major {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 8px;
+            text-align: center;
         }
         .profile-label {
             font-family: 'Montserrat', sans-serif;
@@ -107,18 +125,22 @@
         <div class="profile-card" data-profile="jake">
             <div class="profile-img-slot"></div>
             <div class="profile-label">Jake Bleeden</div>
+            <div class="profile-major" id="major-jake"></div>
         </div>
         <div class="profile-card" data-profile="tj">
             <div class="profile-img-slot"></div>
             <div class="profile-label">TJ Meltesen</div>
+            <div class="profile-major" id="major-tj"></div>
         </div>
         <div class="profile-card" data-profile="mazin">
             <div class="profile-img-slot"></div>
             <div class="profile-label">Mazin Ali</div>
+            <div class="profile-major" id="major-mazin"></div>
         </div>
         <div class="profile-card" data-profile="chris">
             <div class="profile-img-slot"></div>
             <div class="profile-label">Chris Keller</div>
+            <div class="profile-major" id="major-chris"></div>
         </div>
     </div>
 
