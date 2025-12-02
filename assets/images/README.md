@@ -1,0 +1,1 @@
+Local Saving spot for images

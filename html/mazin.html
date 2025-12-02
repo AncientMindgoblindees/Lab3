@@ -20,31 +20,8 @@
         <div id="bio-display" style="margin-top:10px; background:#222; color:#ffd700; border:2px solid #ffd700; border-radius:8px; padding:10px; font-size:1rem; min-height:80px; width:100%;"></div>
       </div>
     </div>
-    <script>
-      // Load saved bio and zipped JPEG image from localStorage
-      document.addEventListener('DOMContentLoaded', function() {
-        var bio = localStorage.getItem('userBio-mazin') || 'No biography available.';
-        document.getElementById('bio-display').textContent = bio;
-        // Load saved zipped JPEG image for Mazin
-        var zippedData = localStorage.getItem('profileImg-mazin');
-        var imgPreview = document.getElementById('img-preview');
-        if (zippedData) {
-          JSZip.loadAsync(zippedData, {base64: true}).then(function(zip) {
-            return zip.file('profile.jpg').async('base64');
-          }).then(function(imgBase64) {
-            imgPreview.src = 'data:image/jpeg;base64,' + imgBase64;
-            imgPreview.style.display = 'block';
-          }).catch(function(err) {
-            imgPreview.style.display = 'none';
-            console.error('Error unzipping image:', err);
-            // Optionally clear corrupted data
-            // localStorage.removeItem('profileImg-mazin');
-          });
-        } else {
-          imgPreview.style.display = 'none';
-        }
-      });
-    </script>
+    <!-- Centralized profile loader -->
+    <script src="/js/profile.js"></script>
 
     <script src="/js/auth_config.js"></script>
     <script src="/js/script.js"></script>
