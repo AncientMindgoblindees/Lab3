@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     // SVG Circuit switch logic for landing page
-    const switchBtn = document.getElementById('switch');
+    const switchBtn = document.getElementById('start-btn');
     const svgSwitch = document.getElementById('svg-switch');
     const switchLever = document.getElementById('switch-lever');
     const ledGlow = document.getElementById('led-glow');

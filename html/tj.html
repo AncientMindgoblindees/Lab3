@@ -4,26 +4,318 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TJ Meltesen</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background-color: #111;
+            color: #e0e0e0;
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background: #000;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #ffd700;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        h1 {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            color: #ffd700;
+            letter-spacing: 1px;
+            font-size: 1.5rem;
+        }
+        .back-link {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            padding: 8px 16px;
+            border: 1px solid #444;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .back-link:hover {
+            border-color: #ffd700;
+            color: #ffd700;
+            background: rgba(255, 215, 0, 0.05);
+        }
+        .profile-container {
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 0 20px;
+            gap: 40px;
+            width: 100%;
+        }
+        .profile-sidebar {
+            flex: 1;
+            min-width: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .profile-main {
+            flex: 2;
+            min-width: 300px;
+        }
+        .profile-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 0;
+        }
+        .profile-tab {
+            background: #222;
+            color: #888;
+            border: 1px solid #333;
+            border-bottom: none;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s ease;
+        }
+        .profile-tab:hover {
+            color: #ffd700;
+        }
+        .profile-tab.active {
+            background: #1a1a1a;
+            color: #ffd700;
+            border-color: #ffd700;
+            border-bottom: 1px solid #1a1a1a;
+            margin-bottom: -1px;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        #img-preview {
+            width: 100%;
+            max-width: 280px;
+            max-height: 280px;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 3px solid #333;
+            background: #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+            display: none;
+            transition: border-color 0.3s ease;
+        }
+        #img-preview:hover {
+            border-color: #ffd700;
+        }
+        .bio-card {
+            background: #1a1a1a;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border-left: 4px solid #ffd700;
+        }
+        .bio-label {
+            display: block;
+            color: #ffd700;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+        }
+        #bio-display {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ddd;
+            min-height: 100px;
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #555;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+        @media (max-width: 768px) {
+            .profile-container {
+                flex-direction: column;
+                margin-top: 30px;
+            }
+            .profile-sidebar, .profile-main {
+                width: 100%;
+                text-align: center;
+            }
+            .bio-card {
+                text-align: left;
+            }
+        }
+    </style>
 </head>
-<body style="background:#111; color:#ffd700; font-family:Arial,sans-serif; margin:0;">
-    <h1 style="background:#000; color:#ffd700; padding:20px; margin:0; text-align:center; letter-spacing:2px; border-bottom:2px solid #ffd700;">TJ Meltesen</h1>
+<body data-profile="tj">
+    <header>
+        <h1>TJ Meltesen</h1>
+        <a href="/html/teammates.html" class="back-link">&larr; Back to Team</a>
+    </header>
  
-    <div style="display: flex; min-height: 200px;">
-      <div style="flex: 1; padding: 30px 20px 30px 40px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-        <label for="profile-img" style="color:#ffd700; font-weight:bold; margin-bottom:10px;">TJ Meltesen:</label>
-        <img id="img-preview" src="" alt="Image Preview" style="display:none; max-width:320px; max-height:320px; border-radius:10px; border:2px solid #ffd700; background:#222;" />
-      </div>
-      <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 30px 40px 30px 20px;">
-        <label style="color:#ffd700; font-weight:bold;">Biography:</label>
-        <div id="bio-display" style="margin-top:10px; background:#222; color:#ffd700; border:2px solid #ffd700; border-radius:8px; padding:10px; font-size:1rem; min-height:80px; width:100%;"></div>
-      </div>
+    <div class="profile-container">
+        <aside class="profile-sidebar">
+            <img id="img-preview" src="" alt="TJ Meltesen" />
+        </aside>
+        
+        <main class="profile-main">
+            <!-- Tabs -->
+            <div class="profile-tabs">
+                <button class="profile-tab active" data-tab="bio">Biography</button>
+                <button class="profile-tab" data-tab="resume">Resume</button>
+                <button class="profile-tab" data-tab="contact">Contact</button>
+            </div>
+            
+            <!-- Bio Tab Content -->
+            <div id="tab-bio" class="tab-content active">
+                <div class="bio-card" style="border-radius: 0 16px 16px 16px;">
+                    <label class="bio-label">Biography</label>
+                    <div id="bio-display">Loading...</div>
+                </div>
+            </div>
+            
+            <!-- Resume Tab Content -->
+            <div id="tab-resume" class="tab-content">
+                <div class="bio-card" style="border-radius: 0 16px 16px 16px;">
+                    <label class="bio-label">Resume</label>
+                    <div id="resume-container">
+                        <p style="color:#888;">Loading resume...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contact Tab Content -->
+            <div id="tab-contact" class="tab-content">
+                <div class="bio-card" style="border-radius: 0 16px 16px 16px;">
+                    <label class="bio-label">Contact TJ</label>
+                    <form id="contact-form">
+                        <div style="margin-bottom: 15px;">
+                            <label for="contact-name" style="color: #ffd700; font-weight: 600; margin-bottom: 8px; display: block; font-size: 0.9rem;">Your Name *</label>
+                            <input type="text" id="contact-name" required style="width: 100%; background: #111; color: #fff; border: 1px solid #333; border-radius: 8px; padding: 12px; font-family: 'Open Sans', sans-serif;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="contact-email" style="color: #ffd700; font-weight: 600; margin-bottom: 8px; display: block; font-size: 0.9rem;">Your Email</label>
+                            <input type="email" id="contact-email" style="width: 100%; background: #111; color: #fff; border: 1px solid #333; border-radius: 8px; padding: 12px; font-family: 'Open Sans', sans-serif;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="contact-phone" style="color: #ffd700; font-weight: 600; margin-bottom: 8px; display: block; font-size: 0.9rem;">Your Phone</label>
+                            <input type="tel" id="contact-phone" style="width: 100%; background: #111; color: #fff; border: 1px solid #333; border-radius: 8px; padding: 12px; font-family: 'Open Sans', sans-serif;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label for="contact-message" style="color: #ffd700; font-weight: 600; margin-bottom: 8px; display: block; font-size: 0.9rem;">Message *</label>
+                            <textarea id="contact-message" rows="4" required style="width: 100%; background: #111; color: #fff; border: 1px solid #333; border-radius: 8px; padding: 12px; font-family: 'Open Sans', sans-serif; resize: vertical;"></textarea>
+                        </div>
+                        <button type="submit" style="background: #ffd700; color: #000; border: none; padding: 12px 24px; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: background 0.3s ease;">Send Message</button>
+                        <div id="contact-status" style="margin-top: 15px; padding: 10px; border-radius: 6px; display: none;"></div>
+                    </form>
+                </div>
+            </div>
+        </main>
     </div>
-    <!-- Centralized profile loader -->
-    <script src="/js/profile.js"></script>
 
+    <footer>
+        Group 12 Lab 3 &copy; 2025
+    </footer>
+    
+    <script>
+    // Tab switching functionality
+    document.querySelectorAll('.profile-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+            document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            this.classList.add('active');
+            document.getElementById('tab-' + this.getAttribute('data-tab')).classList.add('active');
+        });
+    });
+    
+    // Load resume on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const profile = document.body.getAttribute('data-profile') || 'tj';
+        const resumeContainer = document.getElementById('resume-container');
+        
+        fetch(`/assets/resume.php?profile=${profile}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.exists) {
+                    resumeContainer.innerHTML = `
+                        <div style="margin-bottom:15px;">
+                            <a href="${data.url}" target="_blank" style="display:inline-block;background:#ffd700;color:#000;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:700;margin-right:10px;">Download Resume</a>
+                            <a href="${data.url}" target="_blank" style="color:#ffd700;text-decoration:underline;">Open in new tab</a>
+                        </div>
+                        <iframe src="${data.url}" style="width:100%;height:600px;border:2px solid #333;border-radius:8px;background:#fff;"></iframe>
+                    `;
+                } else {
+                    resumeContainer.innerHTML = '<p style="color:#888;">No resume uploaded yet.</p>';
+                }
+            })
+            .catch(err => {
+                resumeContainer.innerHTML = '<p style="color:#f44;">Error loading resume.</p>';
+            });
+    });
+    
+    // Contact form submission
+    document.getElementById('contact-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const statusDiv = document.getElementById('contact-status');
+        const profile = document.body.getAttribute('data-profile') || 'tj';
+        
+        const formData = {
+            profile: profile,
+            name: document.getElementById('contact-name').value,
+            email: document.getElementById('contact-email').value,
+            phone: document.getElementById('contact-phone').value,
+            message: document.getElementById('contact-message').value
+        };
+        
+        try {
+            const response = await fetch('/assets/save_message.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                statusDiv.style.display = 'block';
+                statusDiv.style.background = '#1a3d1a';
+                statusDiv.style.color = '#4caf50';
+                statusDiv.textContent = 'Message sent successfully!';
+                document.getElementById('contact-form').reset();
+            } else {
+                throw new Error(result.error || 'Failed to send message');
+            }
+        } catch (error) {
+            statusDiv.style.display = 'block';
+            statusDiv.style.background = '#3d1a1a';
+            statusDiv.style.color = '#f44336';
+            statusDiv.textContent = 'Error: ' + error.message;
+        }
+        
+        setTimeout(() => { statusDiv.style.display = 'none'; }, 5000);
+    });
+    </script>
+
+    <!-- Scripts -->
     <script src="/js/auth_config.js"></script>
     <script src="/js/script.js"></script>
+    <script src="/js/profile.js"></script>
 </body>
 </html>
